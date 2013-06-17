@@ -9,7 +9,15 @@
 
 @interface QCOAuthPlugIn : QCPlugIn
 {
-
+	
 }
+
+@property (assign) NSString *inputConsumerKey;
+@property (assign) NSString *inputConsumerSecret;
+@property (assign) NSString *inputTokenKey;
+@property (assign) NSString *inputTokenSecret;
+@property (assign) BOOL inputUpdate;
+
+@property (assign) NSString *outputOAuthHeader;
 
 @end

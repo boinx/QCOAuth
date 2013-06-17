@@ -7,6 +7,8 @@
 
 #import "QCOAuthPlugIn.h"
 
+#import "OAMutableURLRequest.h"
+
 
 #ifndef NSAppKitVersionNumber10_7
 #define NSAppKitVersionNumber10_7 1138
@@ -24,6 +26,15 @@
 
 
 @implementation QCOAuthPlugIn
+
+@dynamic inputConsumerKey;
+@dynamic inputConsumerSecret;
+@dynamic inputTokenKey;
+@dynamic inputTokenSecret;
+@dynamic inputUpdate;
+
+@dynamic outputOAuthHeader;
+
 
 + (NSBundle *)bundle
 {
@@ -74,12 +85,42 @@
 
 + (NSDictionary *)attributesForPropertyPortWithKey:(NSString *)key
 {
+	if([key isEqualToString:@"inputConsumerKey"])
+	{
+		return @{ QCPortAttributeNameKey: @"Consumer Key" };
+	}
+	
+	if([key isEqualToString:@"inputConsumerSecret"])
+	{
+		return @{ QCPortAttributeNameKey: @"Consumer Secret" };
+	}
+	
+	if([key isEqualToString:@"inputTokenKey"])
+	{
+		return @{ QCPortAttributeNameKey: @"Token Key" };
+	}
+	
+	if([key isEqualToString:@"inputTokenSecret"])
+	{
+		return @{ QCPortAttributeNameKey: @"Token Secret" };
+	}
+	
+	if([key isEqualToString:@"inputUpdate"])
+	{
+		return @{ QCPortAttributeNameKey: @"Update" };
+	}
+	
+	if([key isEqualToString:@"outputOAuthHeader"])
+	{
+		return @{ QCPortAttributeNameKey: @"OAuth Header" };
+	}
+	
 	return nil;
 }
 
 + (NSArray *)plugInKeys
 {
-	return [NSArray arrayWithObjects:@"code", nil];
+	return nil;
 }
 
 + (QCPlugInExecutionMode)executionMode
@@ -97,7 +138,7 @@
 	self = [super init];
 	if(self != nil)
 	{
-
+		
 	}
 	return self;
 }
@@ -122,6 +163,22 @@
 
 - (BOOL)execute:(id<QCPlugInContext>)context atTime:(NSTimeInterval)time withArguments:(NSDictionary *)arguments
 {
+	if([self didValueForInputKeyChange:@"inputUpdate"] && self.inputUpdate == YES)
+	{
+		@autoreleasepool
+		{
+			NSURL *url = [NSURL URLWithString:@"https://example.com"];
+
+			OAConsumer *consumer = [[[OAConsumer alloc] initWithKey:self.inputConsumerKey secret:self.inputConsumerSecret] autorelease];
+			OAToken *accessToken = [[[OAToken alloc] initWithKey:self.inputTokenKey secret:self.inputTokenSecret] autorelease];
+		
+			OAMutableURLRequest *request = [[[OAMutableURLRequest alloc] initWithURL:url consumer:consumer token:accessToken realm:nil signatureProvider:nil] autorelease];
+			[request prepare];
+
+			self.outputOAuthHeader = [request.allHTTPHeaderFields objectForKey:@"Authorization"];
+		}
+	}
+	
 	return YES;
 }
 
