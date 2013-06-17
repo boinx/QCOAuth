@@ -33,7 +33,8 @@
 @dynamic inputTokenSecret;
 @dynamic inputUpdate;
 
-@dynamic outputOAuthHeader;
+@dynamic outputAuthorization;
+@dynamic outputHTTPHeader;
 
 
 + (NSBundle *)bundle
@@ -110,9 +111,14 @@
 		return @{ QCPortAttributeNameKey: @"Update" };
 	}
 	
-	if([key isEqualToString:@"outputOAuthHeader"])
+	if([key isEqualToString:@"outputAuthorization"])
 	{
-		return @{ QCPortAttributeNameKey: @"OAuth Header" };
+		return @{ QCPortAttributeNameKey: @"Authorization" };
+	}
+	
+	if([key isEqualToString:@"outputHTTPHeader"])
+	{
+		return @{ QCPortAttributeNameKey: @"HTTP Header" };
 	}
 	
 	return nil;
@@ -175,7 +181,11 @@
 			OAMutableURLRequest *request = [[[OAMutableURLRequest alloc] initWithURL:url consumer:consumer token:accessToken realm:nil signatureProvider:nil] autorelease];
 			[request prepare];
 
-			self.outputOAuthHeader = [request.allHTTPHeaderFields objectForKey:@"Authorization"];
+			NSString *authorization = [request.allHTTPHeaderFields objectForKey:@"Authorization"];
+			
+			self.outputAuthorization = authorization;
+			
+			self.outputHTTPHeader = @{ @"Authorization": authorization };
 		}
 	}
 	

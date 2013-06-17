@@ -18,6 +18,7 @@
 @property (assign) NSString *inputTokenSecret;
 @property (assign) BOOL inputUpdate;
 
-@property (assign) NSString *outputOAuthHeader;
+@property (assign) NSString *outputAuthorization;
+@property (assign) NSDictionary *outputHTTPHeader;
 
 @end
