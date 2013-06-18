@@ -27,6 +27,7 @@
 
 @implementation QCOAuthPlugIn
 
+@dynamic inputURL;
 @dynamic inputConsumerKey;
 @dynamic inputConsumerSecret;
 @dynamic inputTokenKey;
@@ -48,9 +49,9 @@
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
     
-	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInName", nil, bundle, @"LUA script", @"Short name") forKey:QCPlugInAttributeNameKey];
-	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInDescription", nil, bundle, @"LUA script plug-in", @"Long description") forKey:QCPlugInAttributeDescriptionKey];
-	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInCopyright", nil, bundle, @"© 2012 Boinx Software Ltd.", @"Copyright text") forKey:QCPlugInAttributeCopyrightKey];
+	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInName", nil, bundle, @"OAuth Authorization", @"Short name") forKey:QCPlugInAttributeNameKey];
+	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInDescription", nil, bundle, @"OAuth Authoriation", @"Long description") forKey:QCPlugInAttributeDescriptionKey];
+	[attributes setObject:NSLocalizedStringWithDefaultValue(@"PlugInCopyright", nil, bundle, @"© 2013 Boinx Software Ltd.", @"Copyright text") forKey:QCPlugInAttributeCopyrightKey];
     
 #if defined(MAC_OS_X_VERSION_10_7) && (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7)
 	if(&QCPlugInAttributeCategoriesKey)
@@ -86,6 +87,11 @@
 
 + (NSDictionary *)attributesForPropertyPortWithKey:(NSString *)key
 {
+	if([key isEqualToString:@"inputURL"])
+	{
+		return @{ QCPortAttributeNameKey: @"URL" };
+	}
+	
 	if([key isEqualToString:@"inputConsumerKey"])
 	{
 		return @{ QCPortAttributeNameKey: @"Consumer Key" };
@@ -173,16 +179,16 @@
 	{
 		@autoreleasepool
 		{
-			NSURL *url = [NSURL URLWithString:@"https://example.com"];
+			NSURL *url = [NSURL URLWithString:self.inputURL];
 
 			OAConsumer *consumer = [[[OAConsumer alloc] initWithKey:self.inputConsumerKey secret:self.inputConsumerSecret] autorelease];
 			OAToken *accessToken = [[[OAToken alloc] initWithKey:self.inputTokenKey secret:self.inputTokenSecret] autorelease];
 		
 			OAMutableURLRequest *request = [[[OAMutableURLRequest alloc] initWithURL:url consumer:consumer token:accessToken realm:nil signatureProvider:nil] autorelease];
 			[request prepare];
-
-			NSString *authorization = [request.allHTTPHeaderFields objectForKey:@"Authorization"];
 			
+			NSString *authorization = [request.allHTTPHeaderFields objectForKey:@"Authorization"];
+
 			self.outputAuthorization = authorization;
 			
 			self.outputHTTPHeader = @{ @"Authorization": authorization };

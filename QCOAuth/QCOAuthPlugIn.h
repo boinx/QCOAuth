@@ -12,6 +12,7 @@
 	
 }
 
+@property (assign) NSString *inputURL;
 @property (assign) NSString *inputConsumerKey;
 @property (assign) NSString *inputConsumerSecret;
 @property (assign) NSString *inputTokenKey;
