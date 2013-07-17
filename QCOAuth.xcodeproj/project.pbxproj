@@ -81,6 +81,8 @@
 		501A3835176F43470012CC9D /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
 		504ECD8F176F3C6C00AD30BB /* QCOAuthPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QCOAuthPlugIn.h; sourceTree = "<group>"; };
 		504ECD90176F3C6C00AD30BB /* QCOAuthPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QCOAuthPlugIn.m; sourceTree = "<group>"; };
+		50B70A2A1796DEA90067C74C /* BuildNumber.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BuildNumber.xcconfig; sourceTree = "<group>"; };
+		50B70A2B1796DEA90067C74C /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		50FCC98814FF88F7003C383D /* QCOAuth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QCOAuth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		50FCC98B14FF88F7003C383D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		50FCC98D14FF88F7003C383D /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -154,9 +156,19 @@
 			path = Crytpo;
 			sourceTree = "<group>";
 		};
+		50B70A291796DEA90067C74C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				50B70A2A1796DEA90067C74C /* BuildNumber.xcconfig */,
+				50B70A2B1796DEA90067C74C /* Project.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		50FCC97C14FF88F7003C383D = {
 			isa = PBXGroup;
 			children = (
+				50B70A291796DEA90067C74C /* Config */,
 				50FCC99514FF88F7003C383D /* QCOAuth */,
 				501A3817176F43470012CC9D /* OAuthConsumer */,
 				50FCC98A14FF88F7003C383D /* Frameworks */,
@@ -316,6 +328,7 @@
 		};
 		50FCC99F14FF88F7003C383D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50B70A2B1796DEA90067C74C /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
@@ -346,6 +359,7 @@
 		};
 		50FCC9A014FF88F7003C383D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50B70A2B1796DEA90067C74C /* Project.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
