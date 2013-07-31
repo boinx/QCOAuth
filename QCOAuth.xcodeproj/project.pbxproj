@@ -51,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C43CD8C17A8FAA800F3CC9D /* BXRevision.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = BXRevision.sh; sourceTree = "<group>"; };
 		501A3819176F43470012CC9D /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
 		501A381A176F43470012CC9D /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
 		501A381B176F43470012CC9D /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -105,6 +106,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C43CD8B17A8FA7100F3CC9D /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4C43CD8C17A8FAA800F3CC9D /* BXRevision.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 		501A3817176F43470012CC9D /* OAuthConsumer */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +177,7 @@
 		50FCC97C14FF88F7003C383D = {
 			isa = PBXGroup;
 			children = (
+				4C43CD8B17A8FA7100F3CC9D /* Scripts */,
 				50B70A291796DEA90067C74C /* Config */,
 				50FCC99514FF88F7003C383D /* QCOAuth */,
 				501A3817176F43470012CC9D /* OAuthConsumer */,
