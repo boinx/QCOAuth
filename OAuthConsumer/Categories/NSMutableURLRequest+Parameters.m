@@ -51,7 +51,7 @@
     for (NSString *encodedPair in encodedParameterPairs) 
 	{
         NSArray *encodedPairElements = [encodedPair componentsSeparatedByString:@"="];
-        OARequestParameter *parameter = [OARequestParameter requestParameterWithName:[[encodedPairElements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+        QCOARequestParameter *parameter = [QCOARequestParameter requestParameterWithName:[[encodedPairElements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
 																			   value:[[encodedPairElements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [requestParameters addObject:parameter];
     }
@@ -68,7 +68,7 @@
     NSMutableString *encodedParameterPairs = [NSMutableString stringWithCapacity:256];
     
     int position = 1;
-    for (OARequestParameter *requestParameter in parameters) 
+    for (QCOARequestParameter *requestParameter in parameters)
 	{
         [encodedParameterPairs appendString:[requestParameter URLEncodedNameValuePair]];
         if (position < [parameters count])

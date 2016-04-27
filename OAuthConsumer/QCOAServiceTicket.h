@@ -1,8 +1,8 @@
 //
-//  OAHMAC_SHA1SignatureProvider.m
+//  OAServiceTicket.h
 //  OAuthConsumer
 //
-//  Created by Jon Crosby on 10/19/07.
+//  Created by Jon Crosby on 11/5/07.
 //  Copyright 2007 Kaboomerang LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,35 +24,20 @@
 //  THE SOFTWARE.
 
 
-#import "OAHMAC_SHA1SignatureProvider.h"
-#import <CommonCrypto/CommonHMAC.h>
+#import <Foundation/Foundation.h>
+#import "QCOAMutableURLRequest.h"
 
-#include "Base64Transcoder.h"
 
-@implementation OAHMAC_SHA1SignatureProvider
-
-- (NSString *)name 
-{
-    return @"HMAC-SHA1";
+@interface QCOAServiceTicket : NSObject {
+@private
+    QCOAMutableURLRequest *request;
+    NSURLResponse *response;
+    BOOL didSucceed;
 }
+@property(retain) QCOAMutableURLRequest *request;
+@property(retain) NSURLResponse *response;
+@property(assign) BOOL didSucceed;
 
-- (NSString *)signClearText:(NSString *)text withSecret:(NSString *)secret 
-{
-    NSData *secretData = [secret dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *clearTextData = [text dataUsingEncoding:NSUTF8StringEncoding];
-    unsigned char result[20];
-	CCHmac(kCCHmacAlgSHA1, [secretData bytes], [secretData length], [clearTextData bytes], [clearTextData length], result);
-    
-    //Base64 Encoding
-    
-    char base64Result[32];
-    size_t theResultLength = 32;
-    Base64EncodeData(result, 20, base64Result, &theResultLength);
-    NSData *theData = [NSData dataWithBytes:base64Result length:theResultLength];
-    
-    NSString *base64EncodedResult = [[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding];
-    
-    return [base64EncodedResult autorelease];
-}
+- (id)initWithRequest:(QCOAMutableURLRequest *)aRequest response:(NSURLResponse *)aResponse didSucceed:(BOOL)success;
 
 @end

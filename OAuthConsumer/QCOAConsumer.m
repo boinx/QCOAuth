@@ -1,8 +1,8 @@
 //
-//  OADataFetcher.h
+//  OAConsumer.m
 //  OAuthConsumer
 //
-//  Created by Jon Crosby on 11/5/07.
+//  Created by Jon Crosby on 10/19/07.
 //  Copyright 2007 Kaboomerang LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,23 +23,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
-#import "OAMutableURLRequest.h"
-#import "OAServiceTicket.h"
+#import "QCOAConsumer.h"
 
 
-@interface OADataFetcher : NSObject {
-@private
-    OAMutableURLRequest *request;
-    NSURLResponse *response;
-    NSURLConnection *connection;
-    NSError *error;
-    NSData *responseData;
-    id delegate;
-    SEL didFinishSelector;
-    SEL didFailSelector;
+@implementation QCOAConsumer
+@synthesize key, secret;
+
+#pragma mark init
+
+- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret 
+{
+	if (self = [super init])
+	{
+		self.key = aKey;
+		self.secret = aSecret;
+	}
+	return self;
 }
 
-- (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
+- (void)dealloc
+{
+	[key release];
+	[secret release];
+	[super dealloc];
+}
 
 @end

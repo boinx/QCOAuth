@@ -1,5 +1,5 @@
 //
-//  OAHMAC_SHA1SignatureProvider.h
+//  OAToken.h
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 10/19/07.
@@ -23,10 +23,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 #import <Foundation/Foundation.h>
-#import "OASignatureProviding.h"
 
+@interface QCOAToken : NSObject <NSCopying, NSSecureCoding> {
+@protected
+	NSString *key;
+	NSString *secret;
+	NSString *verifier;
+}
 
-@interface OAHMAC_SHA1SignatureProvider : NSObject <OASignatureProviding>
+@property(retain) NSString *verifier;
+@property(retain) NSString *key;
+@property(retain) NSString *secret;
+
+- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret;
+- (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
+- (id)initWithHTTPResponseBody:(NSString *)body;
+
 @end

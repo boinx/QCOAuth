@@ -1,5 +1,5 @@
 //
-//  OARequestParameter.m
+//  OAuthConsumer.h
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 10/19/07.
@@ -23,48 +23,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
-#import "OARequestParameter.h"
-
-
-@implementation OARequestParameter
-@synthesize name, value;
-
-+ (id)requestParameterWithName:(NSString *)aName value:(NSString *)aValue 
-{
-	return [[[OARequestParameter alloc] initWithName:aName value:aValue] autorelease];
-}
-
-- (id)initWithName:(NSString *)aName value:(NSString *)aValue 
-{
-    if (self = [super init])
-	{
-		self.name = aName;
-		self.value = aValue;
-	}
-    return self;
-}
-
-- (void)dealloc
-{
-	[name release];
-	[value release];
-	[super dealloc];
-}
-
-- (NSString *)URLEncodedName 
-{
-	return [self.name URLEncodedString];
-}
-
-- (NSString *)URLEncodedValue 
-{
-    return [self.value URLEncodedString];
-}
-
-- (NSString *)URLEncodedNameValuePair 
-{
-    return [NSString stringWithFormat:@"%@=%@", [self URLEncodedName], [self URLEncodedValue]];
-}
-
-@end
+#import <Foundation/Foundation.h>
+#import "QCOAToken.h"
+#import "QCOAConsumer.h"
+#import "QCOAMutableURLRequest.h"
+#import "NSString+URLEncoding.h"
+#import "NSMutableURLRequest+Parameters.h"
+#import "NSURL+Base.h"
+#import "QCOASignatureProviding.h"
+#import "QCOAHMAC_SHA1SignatureProvider.h"
+#import "QCOAPlaintextSignatureProvider.h"
+#import "QCOARequestParameter.h"
+#import "QCOAServiceTicket.h"
+#import "QCOADataFetcher.h"
+#import "QCOAAsynchronousDataFetcher.h"

@@ -24,25 +24,25 @@
 //  THE SOFTWARE.
 
 
-#import "OAMutableURLRequest.h"
+#import "QCOAMutableURLRequest.h"
 
 
-@interface OAMutableURLRequest (Private)
+@interface QCOAMutableURLRequest (Private)
 - (void)_generateTimestamp;
 - (void)_generateNonce;
 - (NSString *)_signatureBaseString;
 @end
 
-@implementation OAMutableURLRequest
+@implementation QCOAMutableURLRequest
 @synthesize signature, nonce;
 
 #pragma mark init
 
 - (id)initWithURL:(NSURL *)aUrl
-		 consumer:(OAConsumer *)aConsumer
-			token:(OAToken *)aToken
+		 consumer:(QCOAConsumer *)aConsumer
+			token:(QCOAToken *)aToken
             realm:(NSString *)aRealm
-signatureProvider:(id<OASignatureProviding, NSObject>)aProvider 
+signatureProvider:(id<QCOASignatureProviding, NSObject>)aProvider
 {
     if (self = [super initWithURL:aUrl
 					  cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -52,7 +52,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 		
 		// empty token for Unauthorized Request Token transaction
 		if (aToken == nil)
-			token = [[OAToken alloc] init];
+			token = [[QCOAToken alloc] init];
 		else
 			token = [aToken retain];
 		
@@ -63,7 +63,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 		
 		// default to HMAC-SHA1
 		if (aProvider == nil)
-			signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+			signatureProvider = [[QCOAHMAC_SHA1SignatureProvider alloc] init];
 		else 
 			signatureProvider = [aProvider retain];
 		
@@ -76,10 +76,10 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 // Setting a timestamp and nonce to known
 // values can be helpful for testing
 - (id)initWithURL:(NSURL *)aUrl
-		 consumer:(OAConsumer *)aConsumer
-			token:(OAToken *)aToken
+		 consumer:(QCOAConsumer *)aConsumer
+			token:(QCOAToken *)aToken
             realm:(NSString *)aRealm
-signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
+signatureProvider:(id<QCOASignatureProviding, NSObject>)aProvider
             nonce:(NSString *)aNonce
         timestamp:(NSString *)aTimestamp 
 {
@@ -91,7 +91,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 		
 		// empty token for Unauthorized Request Token transaction
 		if (aToken == nil)
-			token = [[OAToken alloc] init];
+			token = [[QCOAToken alloc] init];
 		else
 			token = [aToken retain];
 		
@@ -102,7 +102,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 		
 		// default to HMAC-SHA1
 		if (aProvider == nil)
-			signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
+			signatureProvider = [[QCOAHMAC_SHA1SignatureProvider alloc] init];
 		else 
 			signatureProvider = [aProvider retain];
 		
@@ -203,25 +203,25 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
     // build a sorted array of both request parameters and OAuth header parameters
     NSMutableArray *parameterPairs = [NSMutableArray  arrayWithCapacity:(6 + [[self parameters] count])]; // 6 being the number of OAuth params in the Signature Base String
     
-	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_consumer_key" value:consumer.key] URLEncodedNameValuePair]];
-	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_signature_method" value:[signatureProvider name]] URLEncodedNameValuePair]];
-	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_timestamp" value:timestamp] URLEncodedNameValuePair]];
-	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_nonce" value:nonce] URLEncodedNameValuePair]];
-	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_version" value:@"1.0"] URLEncodedNameValuePair]];
+	[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_consumer_key" value:consumer.key] URLEncodedNameValuePair]];
+	[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_signature_method" value:[signatureProvider name]] URLEncodedNameValuePair]];
+	[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_timestamp" value:timestamp] URLEncodedNameValuePair]];
+	[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_nonce" value:nonce] URLEncodedNameValuePair]];
+	[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_version" value:@"1.0"] URLEncodedNameValuePair]];
     
 	if (![token.key isEqualToString:@""]) {
-        [parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_token" value:token.key] URLEncodedNameValuePair]];
+        [parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_token" value:token.key] URLEncodedNameValuePair]];
 		if (token.verifier != nil && ![token.verifier isEqualToString:@""]) {
-			[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_verifier" value:token.verifier] URLEncodedNameValuePair]];
+			[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_verifier" value:token.verifier] URLEncodedNameValuePair]];
 		}
     }
 	else 
 	{
-		[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_callback" value:@"oob"] URLEncodedNameValuePair]];
+		[parameterPairs addObject:[[QCOARequestParameter requestParameterWithName:@"oauth_callback" value:@"oob"] URLEncodedNameValuePair]];
 	}
 
 	
-    for (OARequestParameter *param in [self parameters]) {
+    for (QCOARequestParameter *param in [self parameters]) {
         [parameterPairs addObject:[param URLEncodedNameValuePair]];
     }
     

@@ -1,5 +1,5 @@
 //
-//  OAPlaintextSignatureProvider.h
+//  OAMutableURLRequest.h
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 10/19/07.
@@ -25,7 +25,44 @@
 
 
 #import <Foundation/Foundation.h>
-#import "OASignatureProviding.h"
+#import "QCOAConsumer.h"
+#import "QCOAToken.h"
+#import "QCOAHMAC_SHA1SignatureProvider.h"
+#import "QCOASignatureProviding.h"
+#import "NSMutableURLRequest+Parameters.h"
+#import "NSURL+Base.h"
 
-@interface OAPlaintextSignatureProvider : NSObject <OASignatureProviding>
+
+@interface QCOAMutableURLRequest : NSMutableURLRequest {
+@protected
+    QCOAConsumer *consumer;
+    QCOAToken *token;
+    NSString *realm;
+    NSString *signature;
+    id<QCOASignatureProviding> signatureProvider;
+    NSString *nonce;
+    NSString *timestamp;
+	NSMutableDictionary *extraOAuthParameters;
+}
+@property(readonly) NSString *signature;
+@property(readonly) NSString *nonce;
+
+- (id)initWithURL:(NSURL *)aUrl
+		 consumer:(QCOAConsumer *)aConsumer
+			token:(QCOAToken *)aToken
+            realm:(NSString *)aRealm
+signatureProvider:(id<QCOASignatureProviding, NSObject>)aProvider;
+
+- (id)initWithURL:(NSURL *)aUrl
+		 consumer:(QCOAConsumer *)aConsumer
+			token:(QCOAToken *)aToken
+            realm:(NSString *)aRealm
+signatureProvider:(id<QCOASignatureProviding, NSObject>)aProvider
+            nonce:(NSString *)aNonce
+        timestamp:(NSString *)aTimestamp;
+
+- (void)prepare;
+
+- (void)setOAuthParameterName:(NSString*)parameterName withValue:(NSString*)parameterValue;
+
 @end

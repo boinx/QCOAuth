@@ -1,5 +1,5 @@
 //
-//  OARequestParameter.h
+//  OAPlaintextSignatureProvider.h
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 10/19/07.
@@ -25,21 +25,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "NSString+URLEncoding.h"
+#import "QCOASignatureProviding.h"
 
-
-@interface OARequestParameter : NSObject {
-@protected
-    NSString *name;
-    NSString *value;
-}
-@property(retain) NSString *name;
-@property(retain) NSString *value;
-
-+ (id)requestParameterWithName:(NSString *)aName value:(NSString *)aValue;
-- (id)initWithName:(NSString *)aName value:(NSString *)aValue;
-- (NSString *)URLEncodedName;
-- (NSString *)URLEncodedValue;
-- (NSString *)URLEncodedNameValuePair;
-
+@interface QCOAPlaintextSignatureProvider : NSObject <QCOASignatureProviding>
 @end

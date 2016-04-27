@@ -24,10 +24,10 @@
 //  THE SOFTWARE.
 
 
-#import "OAToken.h"
+#import "QCOAToken.h"
 
 
-@implementation OAToken
+@implementation QCOAToken
 
 @synthesize key, secret, verifier;
 
@@ -98,7 +98,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	OAToken *token = [[OAToken alloc] init];
+	QCOAToken *token = [[QCOAToken alloc] init];
 	
 	token.verifier = self.verifier;
 	token.key = self.key;

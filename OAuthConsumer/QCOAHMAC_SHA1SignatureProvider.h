@@ -1,5 +1,5 @@
 //
-//  OAConsumer.h
+//  OAHMAC_SHA1SignatureProvider.h
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 10/19/07.
@@ -25,16 +25,8 @@
 
 
 #import <Foundation/Foundation.h>
+#import "QCOASignatureProviding.h"
 
 
-@interface OAConsumer : NSObject {
-@protected
-	NSString *key;
-	NSString *secret;
-}
-@property(retain) NSString *key;
-@property(retain) NSString *secret;
-
-- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret;
-
+@interface QCOAHMAC_SHA1SignatureProvider : NSObject <QCOASignatureProviding>
 @end

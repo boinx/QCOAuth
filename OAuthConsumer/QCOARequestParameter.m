@@ -1,8 +1,9 @@
 //
-//  OAAsynchronousDataFetcher.h
+//  OARequestParameter.m
 //  OAuthConsumer
 //
-//  Created by Zsombor Szabó on 12/3/08.
+//  Created by Jon Crosby on 10/19/07.
+//  Copyright 2007 Kaboomerang LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +23,48 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
 
-#import "OAMutableURLRequest.h"
+#import "QCOARequestParameter.h"
 
-@interface OAAsynchronousDataFetcher : NSObject {
-    OAMutableURLRequest *request;
-    NSURLResponse *response;
-    NSURLConnection *connection;
-    NSMutableData *responseData;
-    id delegate;
-    SEL didFinishSelector;
-    SEL didFailSelector;	
+
+@implementation QCOARequestParameter
+@synthesize name, value;
+
++ (id)requestParameterWithName:(NSString *)aName value:(NSString *)aValue 
+{
+	return [[[QCOARequestParameter alloc] initWithName:aName value:aValue] autorelease];
 }
 
-+ (id)asynchronousFetcherWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
-- (id)initWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
+- (id)initWithName:(NSString *)aName value:(NSString *)aValue 
+{
+    if (self = [super init])
+	{
+		self.name = aName;
+		self.value = aValue;
+	}
+    return self;
+}
 
-- (void)start;
-- (void)cancel;
+- (void)dealloc
+{
+	[name release];
+	[value release];
+	[super dealloc];
+}
+
+- (NSString *)URLEncodedName 
+{
+	return [self.name URLEncodedString];
+}
+
+- (NSString *)URLEncodedValue 
+{
+    return [self.value URLEncodedString];
+}
+
+- (NSString *)URLEncodedNameValuePair 
+{
+    return [NSString stringWithFormat:@"%@=%@", [self URLEncodedName], [self URLEncodedValue]];
+}
 
 @end

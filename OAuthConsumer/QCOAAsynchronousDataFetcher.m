@@ -22,18 +22,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "OAAsynchronousDataFetcher.h"
+#import "QCOAAsynchronousDataFetcher.h"
 
-#import "OAServiceTicket.h"
+#import "QCOAServiceTicket.h"
 
-@implementation OAAsynchronousDataFetcher
+@implementation QCOAAsynchronousDataFetcher
 
-+ (id)asynchronousFetcherWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector
++ (id)asynchronousFetcherWithRequest:(QCOAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector
 {
-	return [[[OAAsynchronousDataFetcher alloc] initWithRequest:aRequest delegate:aDelegate didFinishSelector:finishSelector didFailSelector:failSelector] autorelease];
+	return [[[QCOAAsynchronousDataFetcher alloc] initWithRequest:aRequest delegate:aDelegate didFinishSelector:finishSelector didFailSelector:failSelector] autorelease];
 }
 
-- (id)initWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector
+- (id)initWithRequest:(QCOAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector
 {
 	if (self = [super init])
 	{
@@ -62,7 +62,7 @@
 	}
 	else
 	{
-        OAServiceTicket *ticket= [[OAServiceTicket alloc] initWithRequest:request
+        QCOAServiceTicket *ticket= [[QCOAServiceTicket alloc] initWithRequest:request
                                                                  response:nil
                                                                didSucceed:NO];
         [delegate performSelector:didFailSelector
@@ -109,7 +109,7 @@
 
 - (void)connection:(NSURLConnection *)aConnection didFailWithError:(NSError *)error
 {
-	OAServiceTicket *ticket= [[OAServiceTicket alloc] initWithRequest:request
+	QCOAServiceTicket *ticket= [[QCOAServiceTicket alloc] initWithRequest:request
 															 response:response
 														   didSucceed:NO];
 	[delegate performSelector:didFailSelector
@@ -121,7 +121,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)aConnection
 {
-	OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
+	QCOAServiceTicket *ticket = [[QCOAServiceTicket alloc] initWithRequest:request
 															  response:response
 															didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
 	[delegate performSelector:didFinishSelector

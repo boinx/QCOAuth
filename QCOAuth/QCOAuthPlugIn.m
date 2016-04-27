@@ -7,7 +7,7 @@
 
 #import "QCOAuthPlugIn.h"
 
-#import "OAMutableURLRequest.h"
+#import "QCOAMutableURLRequest.h"
 
 
 #ifndef NSAppKitVersionNumber10_7
@@ -148,10 +148,10 @@
 		{
 			NSURL *url = [NSURL URLWithString:self.inputURL];
 
-			OAConsumer *consumer = [[[OAConsumer alloc] initWithKey:self.inputConsumerKey secret:self.inputConsumerSecret] autorelease];
-			OAToken *accessToken = [[[OAToken alloc] initWithKey:self.inputTokenKey secret:self.inputTokenSecret] autorelease];
+			QCOAConsumer *consumer = [[[QCOAConsumer alloc] initWithKey:self.inputConsumerKey secret:self.inputConsumerSecret] autorelease];
+			QCOAToken *accessToken = [[[QCOAToken alloc] initWithKey:self.inputTokenKey secret:self.inputTokenSecret] autorelease];
 		
-			OAMutableURLRequest *request = [[[OAMutableURLRequest alloc] initWithURL:url consumer:consumer token:accessToken realm:nil signatureProvider:nil] autorelease];
+			QCOAMutableURLRequest *request = [[[QCOAMutableURLRequest alloc] initWithURL:url consumer:consumer token:accessToken realm:nil signatureProvider:nil] autorelease];
 			[request prepare];
 			
 			NSString *authorization = [request.allHTTPHeaderFields objectForKey:@"Authorization"];

@@ -1,5 +1,5 @@
 //
-//  OAServiceTicket.h
+//  OAServiceTicket.m
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 11/5/07.
@@ -24,20 +24,28 @@
 //  THE SOFTWARE.
 
 
-#import <Foundation/Foundation.h>
-#import "OAMutableURLRequest.h"
+#import "QCOAServiceTicket.h"
 
 
-@interface OAServiceTicket : NSObject {
-@private
-    OAMutableURLRequest *request;
-    NSURLResponse *response;
-    BOOL didSucceed;
+@implementation QCOAServiceTicket
+@synthesize request, response, didSucceed;
+
+- (id)initWithRequest:(QCOAMutableURLRequest *)aRequest response:(NSURLResponse *)aResponse didSucceed:(BOOL)success 
+{
+    if (self = [super init])
+	{
+		self.request = aRequest;
+		self.response = aResponse;
+		self.didSucceed = success;
+	}
+    return self;
 }
-@property(retain) OAMutableURLRequest *request;
-@property(retain) NSURLResponse *response;
-@property(assign) BOOL didSucceed;
 
-- (id)initWithRequest:(OAMutableURLRequest *)aRequest response:(NSURLResponse *)aResponse didSucceed:(BOOL)success;
+- (void)dealloc
+{
+	[request release];
+	[response release];
+	[super dealloc];
+}
 
 @end

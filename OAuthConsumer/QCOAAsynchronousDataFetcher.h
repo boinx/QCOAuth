@@ -1,9 +1,8 @@
 //
-//  OAConsumer.m
+//  OAAsynchronousDataFetcher.h
 //  OAuthConsumer
 //
-//  Created by Jon Crosby on 10/19/07.
-//  Copyright 2007 Kaboomerang LLC. All rights reserved.
+//  Created by Zsombor Szabó on 12/3/08.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,29 +22,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "OAConsumer.h"
+#import <Foundation/Foundation.h>
 
+#import "QCOAMutableURLRequest.h"
 
-@implementation OAConsumer
-@synthesize key, secret;
-
-#pragma mark init
-
-- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret 
-{
-	if (self = [super init])
-	{
-		self.key = aKey;
-		self.secret = aSecret;
-	}
-	return self;
+@interface QCOAAsynchronousDataFetcher : NSObject {
+    QCOAMutableURLRequest *request;
+    NSURLResponse *response;
+    NSURLConnection *connection;
+    NSMutableData *responseData;
+    id delegate;
+    SEL didFinishSelector;
+    SEL didFailSelector;	
 }
 
-- (void)dealloc
-{
-	[key release];
-	[secret release];
-	[super dealloc];
-}
++ (id)asynchronousFetcherWithRequest:(QCOAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
+- (id)initWithRequest:(QCOAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
+
+- (void)start;
+- (void)cancel;
 
 @end

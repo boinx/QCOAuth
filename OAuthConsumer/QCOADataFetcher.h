@@ -1,8 +1,8 @@
 //
-//  OAMutableURLRequest.h
+//  OADataFetcher.h
 //  OAuthConsumer
 //
-//  Created by Jon Crosby on 10/19/07.
+//  Created by Jon Crosby on 11/5/07.
 //  Copyright 2007 Kaboomerang LLC. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,46 +23,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-
 #import <Foundation/Foundation.h>
-#import "OAConsumer.h"
-#import "OAToken.h"
-#import "OAHMAC_SHA1SignatureProvider.h"
-#import "OASignatureProviding.h"
-#import "NSMutableURLRequest+Parameters.h"
-#import "NSURL+Base.h"
+#import "QCOAMutableURLRequest.h"
+#import "QCOAServiceTicket.h"
 
 
-@interface OAMutableURLRequest : NSMutableURLRequest {
-@protected
-    OAConsumer *consumer;
-    OAToken *token;
-    NSString *realm;
-    NSString *signature;
-    id<OASignatureProviding> signatureProvider;
-    NSString *nonce;
-    NSString *timestamp;
-	NSMutableDictionary *extraOAuthParameters;
+@interface QCOADataFetcher : NSObject {
+@private
+    QCOAMutableURLRequest *request;
+    NSURLResponse *response;
+    NSURLConnection *connection;
+    NSError *error;
+    NSData *responseData;
+    id delegate;
+    SEL didFinishSelector;
+    SEL didFailSelector;
 }
-@property(readonly) NSString *signature;
-@property(readonly) NSString *nonce;
 
-- (id)initWithURL:(NSURL *)aUrl
-		 consumer:(OAConsumer *)aConsumer
-			token:(OAToken *)aToken
-            realm:(NSString *)aRealm
-signatureProvider:(id<OASignatureProviding, NSObject>)aProvider;
-
-- (id)initWithURL:(NSURL *)aUrl
-		 consumer:(OAConsumer *)aConsumer
-			token:(OAToken *)aToken
-            realm:(NSString *)aRealm
-signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
-            nonce:(NSString *)aNonce
-        timestamp:(NSString *)aTimestamp;
-
-- (void)prepare;
-
-- (void)setOAuthParameterName:(NSString*)parameterName withValue:(NSString*)parameterValue;
+- (void)fetchDataWithRequest:(QCOAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
 
 @end

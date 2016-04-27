@@ -24,11 +24,11 @@
 //  THE SOFTWARE.
 
 
-#import "OAPlaintextSignatureProvider.h"
+#import "QCOAPlaintextSignatureProvider.h"
 #import "NSString+URLEncoding.h"
 
 
-@implementation OAPlaintextSignatureProvider
+@implementation QCOAPlaintextSignatureProvider
 
 - (NSString *)name 
 {
